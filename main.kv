@@ -1,0 +1,45 @@
+#:include cadastro.kv
+
+ScreenManager:
+    Login:
+    Cadastro:
+
+<Cadastro>:
+    name: 'cadastro'
+
+<Login>:
+    name: 'login'
+    FloatLayout:
+        AsyncImage:
+            source: "https://i.pinimg.com/originals/4b/3e/02/4b3e0279e016cc145240de10c8a06fb6.png"
+            pos_hint: {'center_x': 0.5, 'center_y':0.75}
+            size_hint: 0.25, 0.25
+
+        TextInput:
+            hint_text: 'E-mail'
+            pos_hint: {'center_x':0.5, 'center_y':0.5}
+            size_hint: 0.6, 0.05
+
+        TextInput:
+            hint_text: 'Senha'
+            pos_hint: {'center_x':0.5, 'center_y':0.4}
+            size_hint: 0.6, 0.05
+
+        Button:
+            text: 'Login'
+            background_normal: ''
+            background_color: (0,0,0,0.8)
+            pos_hint: {'center_x':0.5, 'center_y':0.3}
+            size_hint: 0.3, 0.1
+            font_size: 30
+
+        Button:
+            text: 'Cadastro'
+            background_normal: ''
+            background_color: (0,0,0,0.8)
+            pos_hint: {'center_x':0.5, 'center_y':0.15}
+            size_hint: 0.3, 0.1
+            font_size: 30
+            on_release: app.root.current = 'cadastro'
+
+
