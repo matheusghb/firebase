@@ -1,8 +1,13 @@
 #:include cadastro.kv
+#:include logado.kv
 
 ScreenManager:
     Login:
     Cadastro:
+    Logado:
+
+<Logado>: 
+    name: 'Logado'
 
 <Cadastro>:
     name: 'cadastro'
@@ -16,11 +21,13 @@ ScreenManager:
             size_hint: 0.25, 0.25
 
         TextInput:
+            id: email
             hint_text: 'E-mail'
             pos_hint: {'center_x':0.5, 'center_y':0.5}
             size_hint: 0.6, 0.05
 
         TextInput:
+            id: senha
             hint_text: 'Senha'
             pos_hint: {'center_x':0.5, 'center_y':0.4}
             size_hint: 0.6, 0.05
@@ -32,6 +39,7 @@ ScreenManager:
             pos_hint: {'center_x':0.5, 'center_y':0.3}
             size_hint: 0.3, 0.1
             font_size: 30
+            on_release: app.log()
 
         Button:
             text: 'Cadastro'
@@ -42,4 +50,10 @@ ScreenManager:
             font_size: 30
             on_release: app.root.current = 'cadastro'
 
+        Label:
+            text: 'Login incorreto'
+            pos_hint: {'center_x':0.5, 'center_y':0.05}
+            font_size: 30
+            color: (1,0,0,0)
+            id: l
 
