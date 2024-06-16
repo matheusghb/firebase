@@ -8,11 +8,19 @@ from firebase import firebase
 from firebase_admin import credentials, auth
 import pyrebase 
 
-firebase = pyrebase.initialize_app('firebase_config.json')
-cred_obj = firebase_admin.credentials.Certificate('firebase_config.json')
-user = auth.sign_in_with_email_and_password('mistermquack124@gmail.com', 123456)
-db = firebase.database()
+firebaseConfig = {
+                  'apiKey': "AIzaSyDLt0yWvUdnMPxEBItMg17_Y0GkUvbBncI",
+                  'authDomain': "login-9ce90.firebaseapp.com",
+                  'databaseURL': "https://login-9ce90-default-rtdb.firebaseio.com",
+                  'projectId': "login-9ce90",
+                  'storageBucket': "login-9ce90.appspot.com",
+                  'messagingSenderId': "488519554912",
+                  'appId': "1:488519554912:web:6549ea36ac56b17191b005",
+                  'measurementId': "G-NVXG9NSXH6"
+};
 
+firebas=pyrebase.initialize_app(firebaseConfig)
+auth=firebas.auth()
 
 Window.clearcolor = (1,1,1,1)
 class Gerenciador(ScreenManager):
@@ -32,41 +40,25 @@ class Login(App):
         return Builder.load_file('main.kv')
     
     def Cadastrar(self):
-      import json
       email = self.root.get_screen('cadastro').ids.email.text 
       senha = self.root.get_screen('cadastro').ids.senha.text
 
-      user_data = {
-         'E-mail': (email),
-         'Senha': (senha)
-      }
-
-      firebase.post('login-9ce90-default-rtdb/Users', data=json.dumps(user_data))
-      print('funcionou')
-    
+      try:
+         user = auth.create_user_with_email_and_password(email, senha)
+      except:
+         self.root.get_screen('cadastro').ids.erro.color = (1,0,0,1)
+      else:
+         self.root.current = 'login'
 
     def log(self):
-      import json
       email = self.root.get_screen('login').ids.email.text
       senha = self.root.get_screen('login').ids.senha.text
-
-      project_id = "login-9ce90"
-      node_name = 'Users'
-      
-      url = f"https://{project_id}.firebaseio.com/{node_name}.json"
-      
-      user_data = {
-         'E-mail': email,
-         'Senha': senha
-      }
-      
-      response = requests.post(url, data=json.dumps(user_data))
-      print (response.status_code)
-
-      if response.status_code in (200, 201):
-         self.root.current = "logado"
-      else:
+      try:
+         auth_result = auth.sign_in_with_email_and_password(email, senha)
+      except:
          self.root.get_screen('login').ids.l.color = (1, 0, 0, 1)
+      else:
+         self.root.current = 'Logado'
 
 
 
